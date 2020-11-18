@@ -45,16 +45,17 @@ class Canvas extends React.Component {
   }
   
   componentDidUpdate() {
-    const {angle} = this.props;
     const width = this.ctx.canvas.width;
     const height = this.ctx.canvas.height;
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.clearRect(0, 0, width, height);
-    this.ctx.translate(width/2, height/2 );
-    this.ctx.rotate(angle * Math.PI / 180);
-    this.ctx.fillStyle = '#4397AC';
-    this.ctx.fillRect(-width/4, -height/4, width/2, height/2);
+    const imageData = this.ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
+    for (var i = 0; i < data.length; i++) {
+      data[i] = Math.trunc(Math.random() * 255);
+    }
+    this.ctx.putImageData(imageData, 0, 0);
     this.ctx.restore();
   }
   
