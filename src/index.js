@@ -68,7 +68,7 @@ class PureCanvas extends React.Component {
   
   render() {
     return (
-      <canvas width="300" height="300" 
+      <canvas width="600" height="600" 
         ref={node => node ? this.props.contextRef(node.getContext('2d')) : null}
       />
     )
