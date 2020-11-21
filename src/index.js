@@ -73,13 +73,13 @@ class Canvas extends React.Component {
     const height = this.ctx.canvas.height;
     this.ctx.clearRect(0, 0, width, height);
     var newImageData = this.ctx.createImageData(width, height);
-    let defaultToZero = color => color || 0;
-    for (var i = 0; i < this.props.imageData.length; i++) {
-      const {red, green, blue, alpha} = this.props.imageData[i];
-      newImageData.data[i] = defaultToZero(red);
-      newImageData.data[i + 1] = defaultToZero(green);
-      newImageData.data[i + 2] = defaultToZero(blue);
-      newImageData.data[i + 3] = defaultToZero(alpha); 
+    let i = 0;
+    for (const {red = 0, green = 0, blue = 0, alpha = 255} of this.props.imageData) {
+      newImageData.data[i] = red;
+      newImageData.data[i + 1] = green;
+      newImageData.data[i + 2] = blue;
+      newImageData.data[i + 3] = alpha;
+      i += 4; 
     }
     this.ctx.putImageData(newImageData, 0, 0);
   }
@@ -100,12 +100,12 @@ class Canvas extends React.Component {
 
 function randomPixels(length) {
   let data = [];
-  for (var i = 0; i < length; i += 4) {
+  for (var i = 0; i < length; i++) {
     data.push({
-      red: randomInteger(0, 255),
+      //red: randomInteger(0, 255),
       green: randomInteger(0, 255),
-      blue: randomInteger(0, 255),
-      // alpha: randomInteger(0, 255)
+      //blue: randomInteger(0, 255),
+      //alpha: randomInteger(0, 255)
     });
   }
 
