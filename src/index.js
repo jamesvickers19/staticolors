@@ -9,7 +9,7 @@ class App extends React.Component {
       <Animation
         width={dim}
         height={dim}
-        pixelsFunc={() => randomPixels(dim * dim)}>
+        getImageData={() => randomPixels(dim * dim)}>
       </Animation>
     </div>);
   }
@@ -31,7 +31,7 @@ class Animation extends React.Component {
   }
   
   updateAnimationState() {
-    this.setState(state => ({ imageData: this.props.pixelsFunc(), stepMs: state.stepMs }));
+    this.setState(state => ({ imageData: this.props.getImageData(), stepMs: state.stepMs }));
     if (this.state.stepMs > 0) {
       this.sleep(this.state.stepMs).then(() => this.updateAnimation());
     }
