@@ -18,7 +18,7 @@ class App extends React.Component {
 class Animation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { stepMs: props.stepMs || 0, imageData: [] };
+    this.state = { stepMs: props.stepMs || 0 };
     this.updateAnimationState = this.updateAnimationState.bind(this);
   }
   
