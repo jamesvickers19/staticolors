@@ -71,15 +71,12 @@ class Canvas extends React.Component {
   paint() {
     const width = this.ctx.canvas.width;
     const height = this.ctx.canvas.height;
-    this.ctx.save();
-    this.ctx.beginPath();
     this.ctx.clearRect(0, 0, width, height);
     var newImageData = this.ctx.createImageData(width, height);
     for (var i = 0; i < this.props.imageData.length; i++) {
       newImageData.data[i] = this.props.imageData[i];
     }
     this.ctx.putImageData(newImageData, 0, 0);
-    this.ctx.restore();
   }
   
   componentDidUpdate() {
