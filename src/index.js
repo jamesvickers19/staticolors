@@ -5,7 +5,7 @@ class App extends React.Component {
   render() {
     return (
     <div>
-      <Animation></Animation>
+      <Animation pixelsFunc={() => randomPixels(600 * 600)}></Animation>
     </div>);
   }
 }
@@ -13,8 +13,7 @@ class App extends React.Component {
 class Animation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { stepMs: props.stepMs || 0 };
-    console.log("stepMs: " + this.state.stepMs);
+    this.state = { stepMs: props.stepMs || 0, imageData: [] };
     this.updateAnimationState = this.updateAnimationState.bind(this);
   }
   
@@ -27,8 +26,7 @@ class Animation extends React.Component {
   }
   
   updateAnimationState() {
-    console.log("stepMs: " + this.state.stepMs);
-    this.setState(prevState => ({ angle: prevState.angle + 1 }));
+    this.setState(state => ({ imageData: this.props.pixelsFunc(), stepMs: state.stepMs }));
     if (this.state.stepMs > 0) {
       this.sleep(this.state.stepMs).then(() => this.updateAnimation());
     }
@@ -46,7 +44,7 @@ class Animation extends React.Component {
   }
   
   render() {
-    return <Canvas angle={this.state.angle} />
+    return <Canvas imageData={this.state.imageData} />
   }
 }
 
@@ -60,26 +58,22 @@ class Canvas extends React.Component {
     this.ctx = ctx;
   }
 
-  paintRandom(ctx) {
-    const width = ctx.canvas.width;
-    const height = ctx.canvas.height;
-    ctx.save();
-    ctx.beginPath();
-    ctx.clearRect(0, 0, width, height);
-    const imageData = ctx.getImageData(0, 0, width, height);
-    const data = imageData.data;
-    for (var i = 0; i < data.length; i += 4) {
-      data[i] = randomInteger(0, 255);       // red
-      data[i + 1] = randomInteger(0, 255);  // green
-      data[i + 2] = randomInteger(0, 255); // blue
-      data[i + 3] = randomInteger(0, 255); // alpha
+  paint() {
+    const width = this.ctx.canvas.width;
+    const height = this.ctx.canvas.height;
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.clearRect(0, 0, width, height);
+    var newImageData = this.ctx.createImageData(width, height);
+    for (var i = 0; i < this.props.imageData.length; i++) {
+      newImageData.data[i] = this.props.imageData[i];
     }
-    ctx.putImageData(imageData, 0, 0);
-    ctx.restore();
+    this.ctx.putImageData(newImageData, 0, 0);
+    this.ctx.restore();
   }
   
   componentDidUpdate() {
-    this.paintRandom(this.ctx);
+    this.paint();
   }
   
   render() {
@@ -97,6 +91,18 @@ class PureCanvas extends React.Component {
       />
     )
   }
+}
+
+function randomPixels(length) {
+  let data = [];
+  for (var i = 0; i < length; i += 4) {
+    data.push(randomInteger(0, 255)); // red
+    data.push(randomInteger(0, 255)); // green
+    data.push(randomInteger(0, 255)); // blue
+    data.push(randomInteger(0, 255)); // alpha
+  }
+
+  return data;
 }
 
 function randomInteger(min, max) {
