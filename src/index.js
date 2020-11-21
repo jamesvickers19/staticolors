@@ -77,19 +77,12 @@ class Canvas extends React.Component {
   }
   
   render() {
-    return <PureCanvas contextRef={this.saveContext}></PureCanvas>;
-  }
-}
-
-class PureCanvas extends React.Component {
-  shouldComponentUpdate() { return false; }
-  
-  render() {
     return (
-      <canvas width="600" height="600" 
-        ref={node => node ? this.props.contextRef(node.getContext('2d')) : null}
-      />
-    )
+      <canvas
+        width="600"
+        height="600" 
+        ref={node => node ? this.saveContext(node.getContext('2d')) : null}
+      />);
   }
 }
 
