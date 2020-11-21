@@ -13,16 +13,31 @@ class App extends React.Component {
 class Animation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { angle: 0 };
+    this.state = { stepMs: props.stepMs || 0 };
+    console.log("stepMs: " + this.state.stepMs);
     this.updateAnimationState = this.updateAnimationState.bind(this);
   }
   
   componentDidMount() {
-    this.rAF = requestAnimationFrame(this.updateAnimationState);
+    this.updateAnimation();
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
   
   updateAnimationState() {
+    console.log("stepMs: " + this.state.stepMs);
     this.setState(prevState => ({ angle: prevState.angle + 1 }));
+    if (this.state.stepMs > 0) {
+      this.sleep(this.state.stepMs).then(() => this.updateAnimation());
+    }
+    else {
+      this.updateAnimation();
+    }
+  }
+
+  updateAnimation() {
     this.rAF = requestAnimationFrame(this.updateAnimationState);
   }
   
@@ -44,14 +59,14 @@ class Canvas extends React.Component {
   saveContext(ctx) {
     this.ctx = ctx;
   }
-  
-  componentDidUpdate() {
-    const width = this.ctx.canvas.width;
-    const height = this.ctx.canvas.height;
-    this.ctx.save();
-    this.ctx.beginPath();
-    this.ctx.clearRect(0, 0, width, height);
-    const imageData = this.ctx.getImageData(0, 0, width, height);
+
+  paintRandom(ctx) {
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+    ctx.save();
+    ctx.beginPath();
+    ctx.clearRect(0, 0, width, height);
+    const imageData = ctx.getImageData(0, 0, width, height);
     const data = imageData.data;
     for (var i = 0; i < data.length; i += 4) {
       data[i] = randomInteger(0, 255);       // red
@@ -59,8 +74,12 @@ class Canvas extends React.Component {
       data[i + 2] = randomInteger(0, 255); // blue
       data[i + 3] = randomInteger(0, 255); // alpha
     }
-    this.ctx.putImageData(imageData, 0, 0);
-    this.ctx.restore();
+    ctx.putImageData(imageData, 0, 0);
+    ctx.restore();
+  }
+  
+  componentDidUpdate() {
+    this.paintRandom(this.ctx);
   }
   
   render() {
