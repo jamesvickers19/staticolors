@@ -3,9 +3,14 @@ import ReactDOM from 'react-dom';
 
 class App extends React.Component {
   render() {
+    const dim = 500;
     return (
     <div>
-      <Animation pixelsFunc={() => randomPixels(600 * 600)}></Animation>
+      <Animation
+        width={dim}
+        height={dim}
+        pixelsFunc={() => randomPixels(dim * dim)}>
+      </Animation>
     </div>);
   }
 }
@@ -44,7 +49,12 @@ class Animation extends React.Component {
   }
   
   render() {
-    return <Canvas imageData={this.state.imageData} />
+    return (
+      <Canvas
+        width={this.props.width}
+        height={this.props.height}
+        imageData={this.state.imageData}
+        />);
   }
 }
 
@@ -79,13 +89,14 @@ class Canvas extends React.Component {
   render() {
     return (
       <canvas
-        width="600"
-        height="600" 
+        width={this.props.width}
+        height={this.props.height} 
         ref={node => node ? this.saveContext(node.getContext('2d')) : null}
       />);
   }
 }
 
+// TODO return objects with red/green/blue/alpha instead?
 function randomPixels(length) {
   let data = [];
   for (var i = 0; i < length; i += 4) {
