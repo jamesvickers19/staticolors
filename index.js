@@ -1,10 +1,10 @@
 
 let redMax = 255, greenMax = 255, blueMax = 255, alphaMax = 255;
 
-setupSliderInput("redMax", x => redMax = x);
-setupSliderInput("greenMax", x => greenMax = x);
-setupSliderInput("blueMax", x => blueMax = x);
-setupSliderInput("alphaMax", x => alphaMax = x);
+setupSliderInput("red", x => redMax = x);
+setupSliderInput("green", x => greenMax = x);
+setupSliderInput("blue", x => blueMax = x);
+setupSliderInput("alpha", x => alphaMax = x);
 
 function setupSliderInput(id, valueCallback) {
   document.getElementById(id).oninput = function() {
