@@ -1,10 +1,12 @@
 
+let timestepMs = 0;
 let redMax = 255, greenMax = 255, blueMax = 255, alphaMax = 255;
 
 setupSliderInput("red", x => redMax = x);
 setupSliderInput("green", x => greenMax = x);
 setupSliderInput("blue", x => blueMax = x);
 setupSliderInput("alpha", x => alphaMax = x);
+setupSliderInput("timestepMs", x => timestepMs = x);
 
 function setupSliderInput(id, valueCallback) {
   document.getElementById(id).oninput = function() {
@@ -12,7 +14,6 @@ function setupSliderInput(id, valueCallback) {
   }
 }
 
-let timestepMs = 0;
 const canvas = document.getElementById("canvas"); 
 const ctx = canvas.getContext('2d');
 animLoop(() => paintCanvasWithRandomPixels(ctx));
