@@ -13,11 +13,12 @@ function setupSliderInput(id, valueCallback) {
 }
 
 let timestepMs = 0;
-const ctx = document.getElementById("canvas").getContext('2d');
+const canvas = document.getElementById("canvas"); 
+const ctx = canvas.getContext('2d');
 animLoop(() => paintCanvasWithRandomPixels(ctx));
 
 function paintCanvasWithRandomPixels(ctx) {
-  paintCanvasWithPixels(ctx, randomPixels(800 * 800));
+  paintCanvasWithPixels(ctx, randomPixels(canvas.width * canvas.height));
 }
 
 // https://gist.github.com/louisremi/1114293#file_anim_loop_x.js
