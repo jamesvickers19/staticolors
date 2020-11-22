@@ -1,14 +1,18 @@
 
 let redMax = 255, greenMax = 255, blueMax = 255, alphaMax = 255;
 
-setupSliderInput("red", x => redMax = x);
-setupSliderInput("green", x => greenMax = x);
-setupSliderInput("blue", x => blueMax = x);
-setupSliderInput("alpha", x => alphaMax = x);
+setupSliderInputs([
+  ["red", x => redMax = x],
+  ["green", x => greenMax = x],
+  ["blue", x => blueMax = x],
+  ["alpha", x => alphaMax = x]
+]);
 
-function setupSliderInput(id, valueCallback) {
-  document.getElementById(id).oninput = function() {
-    valueCallback(this.value);
+function setupSliderInputs(idToValueCallback) {
+  for (let [id, callback] of idToValueCallback) {
+    document.getElementById(id).oninput = function() {
+      callback(this.value);
+    }
   }
 }
 
