@@ -1,4 +1,5 @@
 
+let timestepMs = 1000;
 const ctx = document.getElementById("canvas").getContext('2d');
 animLoop(() => paintCanvasWithRandomPixels(ctx));
 
@@ -8,20 +9,16 @@ function paintCanvasWithRandomPixels(ctx) {
 
 // https://gist.github.com/louisremi/1114293#file_anim_loop_x.js
 function animLoop(renderFunc) {
-  var running, lastFrame = +new Date;
-  function loop(now) {
-      // stop the loop if render returned false
-      if (running !== false) {
-          requestAnimationFrame(loop);
-          var deltaT = now - lastFrame;
-          // do not render frame when deltaT is too high
-          if (deltaT < 160) {
-              running = renderFunc(deltaT);
-          }
-          lastFrame = now;
-      }
+  function loop() {
+    if (timestepMs > 0) {
+      setTimeout(() => requestAnimationFrame(loop), timestepMs);
+    }
+    else {
+      requestAnimationFrame(loop);
+    }
+    renderFunc();
   }
-  loop(lastFrame);
+  loop();
 }
 
 function paintCanvasWithPixels(ctx, pixelData) {
