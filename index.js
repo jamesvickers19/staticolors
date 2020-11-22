@@ -1,5 +1,18 @@
 
-let timestepMs = 1000;
+let redMax = 255, greenMax = 255, blueMax = 255, alphaMax = 255;
+
+setupSliderInput("redMax", x => redMax = x);
+setupSliderInput("greenMax", x => greenMax = x);
+setupSliderInput("blueMax", x => blueMax = x);
+setupSliderInput("alphaMax", x => alphaMax = x);
+
+function setupSliderInput(id, valueCallback) {
+  document.getElementById(id).oninput = function() {
+    valueCallback(this.value);
+  }
+}
+
+let timestepMs = 0;
 const ctx = document.getElementById("canvas").getContext('2d');
 animLoop(() => paintCanvasWithRandomPixels(ctx));
 
@@ -41,10 +54,10 @@ function randomPixels(length) {
   let data = [];
   for (var i = 0; i < length; i++) {
     data.push({
-      red: randomInteger(0, 255),
-      //green: randomInteger(0, 255),
-      //blue: randomInteger(0, 255),
-      //alpha: randomInteger(0, 255)
+      red: randomInteger(0, redMax),
+      green: randomInteger(0, greenMax),
+      blue: randomInteger(0, blueMax),
+      alpha: randomInteger(0, alphaMax)
     });
   }
 
