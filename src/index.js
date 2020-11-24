@@ -1,20 +1,37 @@
 
-let timestepMs = 0;
-let redMax = 255, greenMax = 255, blueMax = 255, alphaMax = 255;
-
-setupSliderInput("red", x => redMax = x);
-setupSliderInput("green", x => greenMax = x);
-setupSliderInput("blue", x => blueMax = x);
-setupSliderInput("alpha", x => alphaMax = x);
-setupSliderInput("timestepMs", x => timestepMs = x);
-
-function setupSliderInput(id, valueCallback) {
-  document.getElementById(id).oninput = function() {
-    valueCallback(this.value);
-  }
+function colorSlider(id, valuesCallback) {
+  var sliderDiv = document.getElementById(id);
+  noUiSlider.create(sliderDiv, {
+      range: {
+          'min': 0,
+          'max': 255
+      },
+      start: [0, 255],
+      tooltips: true,
+      connect: true,
+      step: 1,
+      format: wNumb({ decimals: 0 }),
+  });
+  sliderDiv.style.margin = '0 auto 30px';
+  sliderDiv.noUiSlider.on('update', (values, _) => valuesCallback(values[0], values[1]));
 }
 
-const canvas = document.getElementById("canvas"); 
+function setupSliderInput(id, valueCallback) {
+    document.getElementById(id).oninput = function() {
+      valueCallback(this.value);
+    }
+}
+  
+let timestepMs = 0;
+setupSliderInput("timestepMs", x => timestepMs = x); // TODO use nouislider, just to show input value?
+
+let redMin = 0, redMax = 255, greenMax = 255, blueMax = 255, alphaMin = 0, alphaMax = 255;
+colorSlider("redSlider", function(min, max) { redMin = min; redMax = max; });
+colorSlider("greenSlider", function(min, max) { greenMin = min; greenMax = max; });
+colorSlider("blueSlider", function(min, max) { blueMin = min; blueMax = max; });
+colorSlider("alphaSlider", function(min, max) { alphaMin = min; alphaMax = max; });
+
+const canvas = this.document.getElementById("canvas"); 
 const ctx = canvas.getContext('2d');
 animLoop(() => paintCanvasWithRandomPixels(ctx));
 
