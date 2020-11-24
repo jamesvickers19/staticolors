@@ -13,7 +13,9 @@ function colorSlider(id, valuesCallback) {
       format: wNumb({ decimals: 0 }),
   });
   sliderDiv.style.margin = '0px 100px 0px 100px';
-  sliderDiv.noUiSlider.on('update', (values, _) => valuesCallback(values[0], values[1]));
+  sliderDiv.noUiSlider.on(
+    'update',
+    (values, _) => valuesCallback(parseInt(values[0]), parseInt(values[1])));
 }
 
 function setupSliderInput(id, valueCallback) {
@@ -72,7 +74,7 @@ function paintCanvasWithPixels(ctx, pixelData) {
 function randomPixels(length) {
   let data = [];
   for (var i = 0; i < length; i++) {
-    data.push({ // TODO this seems really slow; much faster not using min values, and looks different
+    data.push({
       red: randomInteger(redMin, redMax),
       green: randomInteger(greenMin, greenMax),
       blue: randomInteger(blueMin, blueMax),
