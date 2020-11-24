@@ -12,7 +12,7 @@ function colorSlider(id, valuesCallback) {
       step: 1,
       format: wNumb({ decimals: 0 }),
   });
-  sliderDiv.style.margin = '0 auto 30px';
+  sliderDiv.style.margin = '0px 100px 0px 100px';
   sliderDiv.noUiSlider.on('update', (values, _) => valuesCallback(values[0], values[1]));
 }
 
