@@ -25,7 +25,7 @@ function setupSliderInput(id, valueCallback) {
 let timestepMs = 0;
 setupSliderInput("timestepMs", x => timestepMs = x); // TODO use nouislider, just to show input value?
 
-let redMin = 0, redMax = 255, greenMax = 255, blueMax = 255, alphaMin = 0, alphaMax = 255;
+let redMin = 0, redMax = 255, greenMin = 0, greenMax = 255, blueMin = 0, blueMax = 255, alphaMin = 0, alphaMax = 255;
 colorSlider("redSlider", function(min, max) { redMin = min; redMax = max; });
 colorSlider("greenSlider", function(min, max) { greenMin = min; greenMax = max; });
 colorSlider("blueSlider", function(min, max) { blueMin = min; blueMax = max; });
@@ -72,11 +72,11 @@ function paintCanvasWithPixels(ctx, pixelData) {
 function randomPixels(length) {
   let data = [];
   for (var i = 0; i < length; i++) {
-    data.push({
-      red: randomInteger(0, redMax),
-      green: randomInteger(0, greenMax),
-      blue: randomInteger(0, blueMax),
-      alpha: randomInteger(0, alphaMax)
+    data.push({ // TODO this seems really slow; much faster not using min values, and looks different
+      red: randomInteger(redMin, redMax),
+      green: randomInteger(greenMin, greenMax),
+      blue: randomInteger(blueMin, blueMax),
+      alpha: randomInteger(alphaMin, alphaMax)
     });
   }
 
