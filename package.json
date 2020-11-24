@@ -27,7 +27,7 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "scripts": {
-    "start:dev": "webpack serve",
+    "start": "webpack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
