@@ -11,7 +11,7 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "scripts": {
-    "start": "webpack serve"
+    "deploy": "gh-pages -d public"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/jamesvickers19/staticolors/issues"
   },
-  "homepage": "https://github.com/jamesvickers19/staticolors#readme"
+  "homepage": "https://github.com/jamesvickers19/staticolors#readme",
+  "dependencies": {
+    "gh-pages": "^3.1.0"
+  }
 }
