@@ -24,9 +24,6 @@ function setupSliderInput(id, valueCallback) {
     }
 }
   
-let timestepMs = 0;
-setupSliderInput("timestepMs", x => timestepMs = x); // TODO use nouislider, just to show input value?
-
 let redMin = 0, redMax = 255, greenMin = 0, greenMax = 255, blueMin = 0, blueMax = 255, alphaMin = 0, alphaMax = 255;
 colorSlider("redSlider", function(min, max) { redMin = min; redMax = max; });
 colorSlider("greenSlider", function(min, max) { greenMin = min; greenMax = max; });
@@ -44,12 +41,7 @@ function paintCanvasWithRandomPixels(ctx) {
 // https://gist.github.com/louisremi/1114293#file_anim_loop_x.js
 function animLoop(renderFunc) {
   function loop() {
-    if (timestepMs > 0) {
-      setTimeout(() => requestAnimationFrame(loop), timestepMs);
-    }
-    else {
-      requestAnimationFrame(loop);
-    }
+    requestAnimationFrame(loop);
     renderFunc();
   }
   loop();
