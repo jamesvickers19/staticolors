@@ -2,7 +2,7 @@ runtime: nodejs14
 
 handlers:
   - url: /static
-    static_dir: public
+    static_dir: /
 
   - url: /.*
     script: auto
